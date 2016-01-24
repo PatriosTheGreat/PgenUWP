@@ -1,0 +1,26 @@
+﻿<mvvm:SessionStateAwarePage
+    x:Class="PgenUWP.Views.ServicesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mvvm="using:Prism.Windows.Mvvm"
+    xmlns:viewModels="using:PgenUWP.ViewModels"
+    xmlns:pgenUwp="using:PgenUWP"
+    mc:Ignorable="d"
+    mvvm:ViewModelLocator.AutoWireViewModel="True"
+    d:DataContext="{d:DesignInstance viewModels:ServicesPageViewModel}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ListBox 
+            Grid.Column="0" 
+            HorizontalAlignment="Stretch"
+            pgenUwp:ItemClickCommand.Command="{Binding NavigateToService}"
+            ItemsSource="{Binding Services}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding ServiceName}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</mvvm:SessionStateAwarePage>
