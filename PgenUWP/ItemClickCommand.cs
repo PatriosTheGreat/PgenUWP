@@ -30,13 +30,13 @@ namespace PgenUWP
             DependencyObject dependencyObject,
             DependencyPropertyChangedEventArgs e)
         {
-            Contract.Assert(dependencyObject is ListBox);
-            (dependencyObject as ListBox).Tapped += OnItemTapped;
+            Contract.Assert(dependencyObject is ListViewBase);
+            (dependencyObject as ListViewBase).Tapped += OnItemTapped;
         }
 
         private static void OnItemTapped(object sender, TappedRoutedEventArgs e)
         {
-            var control = sender as ListBox;
+            var control = sender as ListViewBase;
             var command = GetCommand(control);
             if (control == null || command == null)
             {

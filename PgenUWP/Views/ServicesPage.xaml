@@ -11,16 +11,24 @@
     mvvm:ViewModelLocator.AutoWireViewModel="True"
     d:DataContext="{d:DesignInstance viewModels:ServicesPageViewModel}">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListBox 
-            Grid.Column="0" 
-            HorizontalAlignment="Stretch"
-            pgenUwp:ItemClickCommand.Command="{Binding NavigateToService}"
-            ItemsSource="{Binding Services}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding ServiceName}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <StackPanel>
+            <AutoSuggestBox 
+                x:Name="ServicesSearchBox"
+                HorizontalAlignment="Stretch"
+                PlaceholderText="Search services"
+                QueryIcon="Find"
+                QuerySubmitted="FoundServiceSubmitted"
+                TextChanged="ServiceSearchQUeryChanged" />
+            <ListView 
+                HorizontalAlignment="Stretch"
+                pgenUwp:ItemClickCommand.Command="{Binding NavigateToService}"
+                ItemsSource="{Binding Services}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding ServiceName}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
     </Grid>
 </mvvm:SessionStateAwarePage>
