@@ -10,7 +10,10 @@ namespace PgenUWP.ViewModels
 {
     public sealed class GeneratePasswordPageViewModel : ViewModelBase
     {
-        public GeneratePasswordPageViewModel(ISessionStateService sessionStateService)
+        public GeneratePasswordPageViewModel(
+            IServicesManager servicesManager,
+            ISessionStateService sessionStateService,
+            INavigationService navigationService)
         {
             Contract.Assert(sessionStateService != null);
 
@@ -38,6 +41,13 @@ namespace PgenUWP.ViewModels
                     Clipboard.SetContent(_dataPackage);
                 },
                 _ => ServicePassword?.Length > 0);
+
+            RemoveService = new LambdaCommand(
+                _ =>
+                {
+                    servicesManager.DeleteServiceAsync(Service.UniqueToken);
+                    navigationService.GoBack();
+                });
         }
         
         public override void OnNavigatedTo(
@@ -86,6 +96,17 @@ namespace PgenUWP.ViewModels
             }
         }
 
+        public LambdaCommand RemoveService
+        {
+            get { return _removeService; }
+
+            set
+            {
+                _removeService = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string ServicePassword
         {
             get { return _servicePassword; }
@@ -101,6 +122,7 @@ namespace PgenUWP.ViewModels
         private LambdaCommand _copyServicePassword;
         private string _servicePassword;
         private LambdaCommand _generateServicePassword;
+        private LambdaCommand _removeService;
         private ServiceInformation _service;
         private readonly DataPackage _dataPackage = new DataPackage();
         private readonly ISessionStateService _sessionStateService;

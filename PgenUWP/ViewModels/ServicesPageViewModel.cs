@@ -37,6 +37,8 @@ namespace PgenUWP.ViewModels
                     navigationService.Navigate(PageTokens.GeneratePassword, null);
                 });
 
+            NavigateToAddService = new LambdaCommand(_ => navigationService.Navigate(PageTokens.AddService, null));
+
             _servicesManager.ServicesUpdated += ResetServices;
 
             ResetServices();

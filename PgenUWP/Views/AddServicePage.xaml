@@ -1,0 +1,68 @@
+﻿<mvvm:SessionStateAwarePage
+    x:Class="PgenUWP.Views.AddServicePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mvvm="using:Prism.Windows.Mvvm"
+    xmlns:viewModels="using:PgenUWP.ViewModels"
+    xmlns:converters="using:PgenUWP.Converters"
+    mvvm:ViewModelLocator.AutoWireViewModel="True"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModels:AddServicePageViewModel}">
+    <mvvm:SessionStateAwarePage.Resources>
+        <ResourceDictionary>
+            <converters:IntToDoubleConverter x:Name="IntToDoubleConverter" />
+        </ResourceDictionary>
+    </mvvm:SessionStateAwarePage.Resources>
+    <Page.BottomAppBar>
+        <CommandBar Visibility="Visible" IsOpen="False" ClosedDisplayMode="Compact" IsSticky="True">
+            <AppBarButton Label="Add service" Icon="Add" Command="{Binding Submit}" />
+        </CommandBar>
+    </Page.BottomAppBar>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock HorizontalAlignment="Center" FontSize="16" Text="Fill service password restrictions" />
+        <Grid Grid.Row="1" VerticalAlignment="Stretch" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Text="Service name:" />
+            <TextBox Grid.Row="0" Grid.Column="1" Height="20" Text="{Binding ServiceName, Mode=TwoWay}" />
+            <TextBlock VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Text="Minimal password length:" />
+            <Slider 
+                x:Name="MinLength" 
+                HorizontalAlignment="Stretch" 
+                Value="{Binding PasswordMinLength, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" 
+                Minimum="1" 
+                Maximum="{Binding Value, ElementName=MaxLength}"
+                Grid.Row="1" 
+                Grid.Column="1" />
+            <TextBlock VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Text="Maximum password length:" />
+            <Slider 
+                x:Name="MaxLength" 
+                HorizontalAlignment="Stretch" 
+                Value="{Binding PasswordMaxLength, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" 
+                Minimum="{Binding Value, ElementName=MinLength}" 
+                Maximum="100" 
+                Grid.Row="2"
+                Grid.Column="1" />
+            <TextBlock VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Text="Allow lower alphabet:" />
+            <CheckBox Padding="0" Grid.Row="3" Grid.Column="1" IsChecked="{Binding AllowLowLatin, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            <TextBlock VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" Text="Allow upper alphabet:" />
+            <CheckBox Padding="0"  Grid.Row="4" Grid.Column="1" IsChecked="{Binding AllowUpperLatin, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        </Grid>
+    </Grid>
+</mvvm:SessionStateAwarePage>

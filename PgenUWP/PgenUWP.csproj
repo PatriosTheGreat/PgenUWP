@@ -98,11 +98,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\IntToDoubleConverter.cs" />
     <Compile Include="ItemClickCommand.cs" />
     <Compile Include="LambdaCommand.cs" />
     <Compile Include="PageTokens.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModels\AddServicePageViewModel.cs" />
     <Compile Include="ViewModels\GeneratePasswordPageViewModel.cs" />
+    <Compile Include="Views\AddServicePage.xaml.cs">
+      <DependentUpon>AddServicePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GeneratePasswordPage.xaml.cs">
       <DependentUpon>GeneratePasswordPage.xaml</DependentUpon>
     </Compile>
@@ -133,6 +138,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\AddServicePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\GeneratePasswordPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -10,10 +10,9 @@
     mc:Ignorable="d"
     mvvm:ViewModelLocator.AutoWireViewModel="True"
     d:DataContext="{d:DesignInstance viewModels:ServicesPageViewModel}">
-
     <Page.BottomAppBar>
         <CommandBar Visibility="Visible" IsOpen="False" ClosedDisplayMode="Compact" IsSticky="True">
-            <AppBarButton Label="Add service" Icon="Add" />
+            <AppBarButton Label="Add service" Icon="Add" Command="{Binding NavigateToAddService}" />
         </CommandBar>
     </Page.BottomAppBar>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

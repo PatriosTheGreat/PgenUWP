@@ -7,7 +7,7 @@ namespace GenerationCore
 {
     public sealed class TestServiceManager : IServicesManager
     {
-        public event Action ServicesUpdated;
+        public event Action ServicesUpdated = () => { };
 
         public TestServiceManager()
         {
@@ -43,11 +43,13 @@ namespace GenerationCore
         public void SaveServiceAsync(ServiceInformation service)
         {
             _services.Add(service);
+            ServicesUpdated();
         }
 
         public void DeleteServiceAsync(string serviceToken)
         {
             _services.Remove(_services.Single(x => x.UniqueToken == serviceToken));
+            ServicesUpdated();
         }
 
         public Task<IEnumerable<ServiceInformation>> LoadServicesAsync()
