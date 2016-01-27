@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Xaml;
 using Microsoft.Practices.Unity;
 using GenerationCore;
 using PgenUWP.ViewModels;
@@ -24,7 +25,7 @@ namespace PgenUWP
         {
             Container.RegisterInstance(NavigationService);
             Container.RegisterInstance(SessionStateService);
-            Container.RegisterInstance<IServicesManager>(new TestServiceManager());
+            Container.RegisterInstance<IServicesManager>(new RoamingServicesManager());
 
             var servicesPageViewModel = Container.Resolve(typeof(ServicesPageViewModel));
 
