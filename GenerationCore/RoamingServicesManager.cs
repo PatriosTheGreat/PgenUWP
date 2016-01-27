@@ -37,8 +37,11 @@ namespace GenerationCore
 
         private async void SaveServicesAsync(IEnumerable<ServiceInformation> services)
         {
-            var servicesFolder = await OpenOrCreateSettingsFolder();
-            using (var servicesStream = await servicesFolder.OpenStreamForWriteAsync())
+            var serviceFile = await RoamingFolder.CreateFileAsync(
+                ServicesFileName,
+                CreationCollisionOption.ReplaceExisting);
+
+            using (var servicesStream = await serviceFile.OpenStreamForWriteAsync())
             {
                 _serializer.WriteObject(servicesStream, services.ToArray());
             }
@@ -48,8 +51,11 @@ namespace GenerationCore
 
         public async Task<IEnumerable<ServiceInformation>> LoadServicesAsync()
         {
-            var servicesFolder = await OpenOrCreateSettingsFolder();
-            using (var servicesStream = await servicesFolder.OpenStreamForReadAsync())
+            var serviceFile = await RoamingFolder.CreateFileAsync(
+                ServicesFileName,
+                CreationCollisionOption.OpenIfExists);
+            
+            using (var servicesStream = await serviceFile.OpenStreamForReadAsync())
             {
                 if (servicesStream.Length == 0)
                 {
@@ -58,13 +64,6 @@ namespace GenerationCore
 
                 return _serializer.ReadObject(servicesStream) as List<ServiceInformation>;
             }
-        }
-
-        private static async Task<StorageFile> OpenOrCreateSettingsFolder()
-        {
-            return await RoamingFolder.CreateFileAsync(
-                ServicesFileName,
-                CreationCollisionOption.OpenIfExists);
         }
         
         private static StorageFolder RoamingFolder => ApplicationData.Current.RoamingFolder;
