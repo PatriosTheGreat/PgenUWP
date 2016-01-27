@@ -30,7 +30,11 @@ namespace PgenUWP
             DependencyObject dependencyObject,
             DependencyPropertyChangedEventArgs e)
         {
-            Contract.Assert(dependencyObject is ListViewBase);
+            var targetObject = dependencyObject as ListViewBase;
+            Contract.Assert(targetObject != null);
+            Contract.Assert(
+                targetObject.SelectionMode == ListViewSelectionMode.Single,
+                "Item click command can be used only with single selection list view base object.");
             (dependencyObject as ListViewBase).Tapped += OnItemTapped;
         }
 
@@ -43,8 +47,8 @@ namespace PgenUWP
                 return;
             }
 
-            var selectedItem = control.SelectedItems.First();
-            if (command.CanExecute(selectedItem))
+            var selectedItem = control.SelectedItems.FirstOrDefault();
+            if (selectedItem != null && command.CanExecute(selectedItem))
             {
                 command.Execute(selectedItem);
             }
