@@ -1,7 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.Collections.Specialized;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.Windows.Input;
+using Windows.UI.Core;
 using GenerationCore;
 using Prism.Windows.AppModel;
 using Prism.Windows.Mvvm;
@@ -20,6 +21,7 @@ namespace PgenUWP.ViewModels
             Contract.Assert(navigationService != null);
             Contract.Assert(sessionStateService != null);
 
+            _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             _servicesManager = servicesManager;
             _sessionStateService = sessionStateService;
             Services = new ObservableCollection<ServiceInformation>();
@@ -39,9 +41,9 @@ namespace PgenUWP.ViewModels
 
             NavigateToAddService = new LambdaCommand(_ => navigationService.Navigate(PageTokens.AddService, null));
 
-            _servicesManager.ServicesUpdated += ResetServices;
+            _servicesManager.ServicesUpdated += ResetServicesSync;
 
-            ResetServices();
+            ResetServicesSync();
         }
         
         public ICommand NavigateToAddService
@@ -80,21 +82,24 @@ namespace PgenUWP.ViewModels
             }
         }
 
-        private async void ResetServices()
+        private async void ResetServicesSync()
         {
             Contract.Assert(Services != null);
-            Services.CollectionChanged -= OnServicesChanged;
         
-            var services = await _servicesManager.LoadServicesAsync();
-
-            Services = new ObservableCollection<ServiceInformation>(services);
-            Services.CollectionChanged += OnServicesChanged;
-            OnPropertyChanged();
+            if (CoreWindow.GetForCurrentThread() == null)
+            {
+                await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, ResetServices);
+            }
+            else
+            {
+                ResetServices();
+            }
         }
 
-        private void OnServicesChanged(object sender, NotifyCollectionChangedEventArgs args)
+        private async void ResetServices()
         {
-            OnPropertyChanged();
+            var services = await _servicesManager.LoadServicesAsync();
+            Services = new ObservableCollection<ServiceInformation>(services);
         }
 
         private ObservableCollection<ServiceInformation> _services;
@@ -102,5 +107,6 @@ namespace PgenUWP.ViewModels
         private ICommand _navigateToService;
         private readonly IServicesManager _servicesManager;
         private readonly ISessionStateService _sessionStateService;
+        private readonly CoreDispatcher _dispatcher;
     }
 }
