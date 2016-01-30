@@ -31,14 +31,17 @@
         <ListView 
                 Grid.Row="1"
                 x:Name="ServicesView"
-                Height="{Binding ActualHeight, ElementName=ServicesView}"
-                VerticalAlignment="Stretch"
-                HorizontalAlignment="Stretch"
+                Height="{Binding Height, ElementName=ServicesView}"
                 pgenUwp:ItemClickCommand.Command="{Binding NavigateToService}"
                 ItemsSource="{Binding Services}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Height" Value="20" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Height="20" Text="{Binding ServiceName}" />
+                    <TextBlock Text="{Binding ServiceName}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
