@@ -27,7 +27,7 @@
             PlaceholderText="Search services"
             QueryIcon="Find"
             QuerySubmitted="FoundServiceSubmitted"
-            TextChanged="ServiceSearchQUeryChanged" />
+            TextChanged="ServiceSearchQueryChanged" />
         <ListView 
                 Grid.Row="1"
                 x:Name="ServicesView"
@@ -36,11 +36,6 @@
                 HorizontalAlignment="Stretch"
                 pgenUwp:ItemClickCommand.Command="{Binding NavigateToService}"
                 ItemsSource="{Binding Services}">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Height="20" Text="{Binding ServiceName}" />

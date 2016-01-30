@@ -6,9 +6,9 @@ namespace GenerationCore
 {
     public interface IServicesManager
     {
-        void SaveServiceAsync(ServiceInformation service);
+        void AddServiceAsync(ServiceInformation service);
 
-        void DeleteServiceAsync(string serviceToken);
+        void RemoveServiceAsync(string serviceToken);
 
         Task<IEnumerable<ServiceInformation>> LoadServicesAsync();
 

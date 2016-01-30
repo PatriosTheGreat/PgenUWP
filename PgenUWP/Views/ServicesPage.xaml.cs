@@ -37,7 +37,7 @@ namespace PgenUWP.Views
             }
         }
 
-        private void ServiceSearchQUeryChanged(
+        private void ServiceSearchQueryChanged(
             AutoSuggestBox sender,
             AutoSuggestBoxTextChangedEventArgs args)
         {

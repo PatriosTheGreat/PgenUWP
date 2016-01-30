@@ -46,7 +46,7 @@
                 x:Name="MinLength" 
                 HorizontalAlignment="Stretch" 
                 Value="{Binding PasswordMinLength, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" 
-                Minimum="1" 
+                Minimum="{Binding SymbolTypesCount, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" 
                 Maximum="{Binding Value, ElementName=MaxLength}"
                 Grid.Row="1" 
                 Grid.Column="1" />

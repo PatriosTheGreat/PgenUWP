@@ -19,7 +19,7 @@ namespace GenerationCore
 
         public event Action ServicesUpdated = Actions.DoNothing;
 
-        public async void SaveServiceAsync(ServiceInformation service)
+        public async void AddServiceAsync(ServiceInformation service)
         {
             Contract.Assert(service != null);
 
@@ -27,7 +27,7 @@ namespace GenerationCore
             SaveServicesAsync(services);
         }
 
-        public async void DeleteServiceAsync(string serviceToken)
+        public async void RemoveServiceAsync(string serviceToken)
         {
             Contract.Assert(!string.IsNullOrWhiteSpace(serviceToken));
             
@@ -43,7 +43,7 @@ namespace GenerationCore
 
             using (var servicesStream = await serviceFile.OpenStreamForWriteAsync())
             {
-                _serializer.WriteObject(servicesStream, services.ToArray());
+                _serializer.WriteObject(servicesStream, services.ToList());
             }
 
             ServicesUpdated();

@@ -17,7 +17,7 @@ namespace PgenUWP.ViewModels
             Submit = new LambdaCommand(
                 _ =>
                 {
-                    _servicesManager.SaveServiceAsync(
+                    _servicesManager.AddServiceAsync(
                         new ServiceInformation(
                             string.IsNullOrEmpty(ServiceName) ? DefaultServiceName : ServiceName,
                             new PasswordRestriction(
@@ -100,7 +100,9 @@ namespace PgenUWP.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
+        public int SymbolTypesCount => (int)CollectSymbolTypes().Count();
+
         private SymbolsType CollectSymbolTypes()
         {
             var allawedSymbols = SymbolsType.Digital;

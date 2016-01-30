@@ -40,13 +40,13 @@ namespace GenerationCore
             };
         }
 
-        public void SaveServiceAsync(ServiceInformation service)
+        public void AddServiceAsync(ServiceInformation service)
         {
             _services.Add(service);
             ServicesUpdated();
         }
 
-        public void DeleteServiceAsync(string serviceToken)
+        public void RemoveServiceAsync(string serviceToken)
         {
             _services.Remove(_services.Single(x => x.UniqueToken == serviceToken));
             ServicesUpdated();

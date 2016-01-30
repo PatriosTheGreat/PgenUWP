@@ -10,9 +10,7 @@ namespace GenerationCore
 {
     public static class ServicePasswordGenerator
     {
-        public static string GeneratePassword(
-            ServiceInformation service,
-            string userPassword)
+        public static string GeneratePassword(ServiceInformation service, string userPassword)
         {
             Contract.Assert(service != null);
             Contract.Assert(userPassword.Length > 0);
@@ -43,7 +41,7 @@ namespace GenerationCore
 
             var resultPassword = mandatoryPart + restPart;
 
-            Contract.Assume(resultPassword.Length > service.Restriction.PasswordMinLength);
+            Contract.Assume(resultPassword.Length >= service.Restriction.PasswordMinLength);
             Contract.Assume(resultPassword.Length <= service.Restriction.PasswordMaxLength);
 
             return resultPassword;
@@ -70,13 +68,13 @@ namespace GenerationCore
             byte[] passwordSymbolsNumbers)
         {
             var passwordPartBuilder = new StringBuilder();
-            var allTypesArray = acceptedTypes.GetFlags().ToArray();
             for (var i = 0; acceptedTypes != 0; i++)
             {
                 var randomTypeNumber = passwordSymbolsNumbers[2 * i];
                 var randomSymbolNumber = passwordSymbolsNumbers[2 * i + 1];
 
-                var usedType = allTypesArray[randomTypeNumber % allTypesArray.Length];
+                var unusedTypes = acceptedTypes.GetFlags().ToArray();
+                var usedType = unusedTypes[randomTypeNumber % unusedTypes.Length];
                 var usedSymbols = usedType.GetSymbols();
                 passwordPartBuilder.Append(usedSymbols[randomSymbolNumber % usedSymbols.Length]);
 
@@ -94,6 +92,11 @@ namespace GenerationCore
         {
             var lowBounder = Math.Max(restriction.PasswordMinLength, restriction.AcceptedTypes.Count());
             var upperBounder = restriction.PasswordMaxLength;
+            if (lowBounder == upperBounder)
+            {
+                return lowBounder;
+            }
+
             var middleBounder = (upperBounder - lowBounder) / 2;
 
             return upperBounder - randomNumber % (upperBounder - middleBounder);

@@ -45,7 +45,7 @@ namespace PgenUWP.ViewModels
             RemoveService = new LambdaCommand(
                 _ =>
                 {
-                    servicesManager.DeleteServiceAsync(Service.UniqueToken);
+                    servicesManager.RemoveServiceAsync(Service.UniqueToken);
                     navigationService.GoBack();
                 });
         }

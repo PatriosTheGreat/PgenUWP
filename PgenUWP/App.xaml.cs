@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml;
 using Microsoft.Practices.Unity;
 using GenerationCore;
 using PgenUWP.ViewModels;
@@ -14,7 +13,7 @@ namespace PgenUWP
         {
             InitializeComponent();
         }
-
+        
         protected override void OnRegisterKnownTypesForSerialization()
         {
             base.OnRegisterKnownTypesForSerialization();
