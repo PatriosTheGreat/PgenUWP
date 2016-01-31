@@ -20,7 +20,18 @@ namespace PgenUWP
             SessionStateService.RegisterKnownType(typeof(ServiceInformation));
         }
 
-        protected override async Task OnInitializeAsync(IActivatedEventArgs args)
+        protected override Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
+        {
+            if (args.PreviousExecutionState != ApplicationExecutionState.Running)
+            {
+                InitializeContainer();
+            }
+
+            NavigationService.Navigate(PageTokens.Services, null);
+            return Task.FromResult(true);
+        }
+
+        private void InitializeContainer()
         {
             Container.RegisterInstance(NavigationService);
             Container.RegisterInstance(SessionStateService);
@@ -29,7 +40,7 @@ namespace PgenUWP
             var servicesPageViewModel = Container.Resolve(typeof(ServicesPageViewModel));
 
             ViewModelLocationProvider.SetDefaultViewModelFactory(
-                viewModelType => 
+                viewModelType =>
                 {
                     if (viewModelType == typeof(ServicesPageViewModel))
                     {
@@ -38,14 +49,6 @@ namespace PgenUWP
 
                     return Container.Resolve(viewModelType);
                 });
-
-            await base.OnInitializeAsync(args);
-        }
-
-        protected override Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
-        {
-            NavigationService.Navigate(PageTokens.Services, null);
-            return Task.FromResult(true);
         }
     }
 }
