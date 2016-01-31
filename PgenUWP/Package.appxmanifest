@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="c2656476-8f41-450c-9031-dc0d3f56e452" Publisher="CN=Patrios" Version="1.0.0.0" />
+  <Identity Name="59659Patrios.PGen" Publisher="CN=FC5D328B-ABF3-4495-ADD0-F28040C7AFD5" Version="1.1.1.0" />
   <mp:PhoneIdentity PhoneProductId="c2656476-8f41-450c-9031-dc0d3f56e452" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>PgenUWP</DisplayName>
+    <DisplayName>PGen</DisplayName>
     <PublisherDisplayName>Patrios</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="PgenUWP.App">
-      <uap:VisualElements DisplayName="PgenUWP" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="PgenUWP" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="PGen" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="PgenUWP" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="PGen">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="black" />

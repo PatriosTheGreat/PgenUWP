@@ -16,22 +16,11 @@ namespace PgenUWP
         
         protected override void OnRegisterKnownTypesForSerialization()
         {
-            base.OnRegisterKnownTypesForSerialization();
             SessionStateService.RegisterKnownType(typeof(ServiceInformation));
+            base.OnRegisterKnownTypesForSerialization();
         }
 
-        protected override Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
-        {
-            if (args.PreviousExecutionState != ApplicationExecutionState.Running)
-            {
-                InitializeContainer();
-            }
-
-            NavigationService.Navigate(PageTokens.Services, null);
-            return Task.FromResult(true);
-        }
-
-        private void InitializeContainer()
+        protected override Task OnInitializeAsync(IActivatedEventArgs args)
         {
             Container.RegisterInstance(NavigationService);
             Container.RegisterInstance(SessionStateService);
@@ -49,6 +38,14 @@ namespace PgenUWP
 
                     return Container.Resolve(viewModelType);
                 });
+
+            return base.OnInitializeAsync(args);
+        }
+
+        protected override Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
+        {
+            NavigationService.Navigate(PageTokens.Services, null);
+            return Task.FromResult(true);
         }
     }
 }
