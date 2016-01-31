@@ -118,10 +118,29 @@ namespace CoreTests
                 serviceWithLotSymbolTypes,
                 _userPassword);
 
-            Assert.IsTrue(password.Length > 2000);
+            Assert.IsTrue(password.Length >= 2000);
             Assert.IsTrue(password.Length <= 3000);
         }
-    
+
+        [TestMethod]
+        public void PasswordWithEqualsMinAndMaxLengthShouldBeSameLength()
+        {
+            var serviceWithLotSymbolTypes = new ServiceInformation(
+                "testService",
+                new PasswordRestriction(
+                    SymbolsType.LowcaseLatin |
+                    SymbolsType.UpcaseLatin |
+                    SymbolsType.Digital,
+                    passwordMinLength: 5,
+                    passwordMaxLength: 5));
+
+            var password = ServicePasswordGenerator.GeneratePassword(
+                serviceWithLotSymbolTypes,
+                _userPassword);
+
+            Assert.IsTrue(password.Length == 5);
+        }
+
         private static string _userPassword;
     }
 }
